@@ -13,6 +13,7 @@
 		B049347827D608210031653E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049347627D608210031653E /* Main.storyboard */; };
 		B049347A27D608220031653E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B049347927D608220031653E /* Assets.xcassets */; };
 		B049347D27D608220031653E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049347B27D608220031653E /* LaunchScreen.storyboard */; };
+		B049348827D60A430031653E /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049348727D60A430031653E /* ChartViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B049347927D608220031653E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B049347C27D608220031653E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B049347E27D608220031653E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B049348727D60A430031653E /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				B049348427D6084A0031653E /* Controller */,
+				B049348627D60A260031653E /* ViewModel */,
 				B049347027D608210031653E /* AppDelegate.swift */,
 				B049347227D608210031653E /* SceneDelegate.swift */,
 				B049347627D608210031653E /* Main.storyboard */,
@@ -73,6 +76,14 @@
 				B049347427D608210031653E /* ViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		B049348627D60A260031653E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B049348727D60A430031653E /* ChartViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B049347527D608210031653E /* ViewController.swift in Sources */,
+				B049348827D60A430031653E /* ChartViewModel.swift in Sources */,
 				B049347127D608210031653E /* AppDelegate.swift in Sources */,
 				B049347327D608210031653E /* SceneDelegate.swift in Sources */,
 			);
