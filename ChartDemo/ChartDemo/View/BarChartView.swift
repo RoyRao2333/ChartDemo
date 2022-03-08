@@ -10,10 +10,13 @@ import Combine
 
 class BarChartView: UIView {
     private let mainLayer = CALayer()
-    private let scrollView = UIScrollView()
     
     private var subscribers: Set<AnyCancellable> = []
-    private let viewModel = BarChartViewModel(barWidth: 40, barSpacing: 20)
+    private let viewModel = BarChartViewModel(barWidth: 20)
+    
+    var barCount: Int {
+        viewModel.barCount
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +37,7 @@ class BarChartView: UIView {
 extension BarChartView {
     
     func updateEntries(with dataEntries: [DataEntry]) {
-        viewModel.generateBarEntries(dataEntries: dataEntries, contentHeight: frame.height)
+        viewModel.generateBarEntries(dataEntries: dataEntries, contentSize: frame.size)
     }
     
     func random() {
@@ -72,14 +75,7 @@ extension BarChartView {
 extension BarChartView {
     
     private func setup() {
-        scrollView.layer.addSublayer(mainLayer)
-        addSubview(scrollView)
-        
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        layer.addSublayer(mainLayer)
     }
     
     private func setObservation() {
@@ -89,15 +85,11 @@ extension BarChartView {
                 guard let weakSelf = self else { return }
                 
                 weakSelf.mainLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
-                weakSelf.scrollView.contentSize = CGSize(
-                    width: weakSelf.viewModel.chartViewContentWidth,
-                    height: weakSelf.frame.size.height
-                )
                 weakSelf.mainLayer.frame = CGRect(
                     x: 0,
                     y: 0,
-                    width: weakSelf.scrollView.contentSize.width,
-                    height: weakSelf.scrollView.contentSize.height
+                    width: weakSelf.frame.size.width,
+                    height: weakSelf.frame.size.height
                 )
                 
                 let values = output.current.map({ $0.data.value })
@@ -158,6 +150,6 @@ extension BarChartView {
             }
         }
         
-        viewModel.generateHorizontalLines(maxValue: maxValue, contentHeight: frame.height)
+        viewModel.generateHorizontalLines(maxValue: maxValue)
     }
 }

@@ -14,28 +14,30 @@ class BarChartViewModel {
     
     private let bottomSpacing: CGFloat = 40
     let barWidth: CGFloat
-    let barSpacing: CGFloat
+    let barCount: Int
+    var barSpacing: CGFloat = .zero
     
-    var chartViewContentWidth: CGFloat {
-        (barWidth + barSpacing) * CGFloat(barEntries.value.count) + barSpacing
-    }
+    var contentSize: CGSize = .zero
     
-    init(barWidth: CGFloat = 40, barSpacing: CGFloat = 20) {
+    init(barWidth: CGFloat = 40, barCount: Int = 7) {
         self.barWidth = barWidth
-        self.barSpacing = barSpacing
+        self.barCount = barCount
     }
 }
 
 
 extension BarChartViewModel {
     
-    func generateBarEntries(dataEntries: [DataEntry], contentHeight: CGFloat) {
+    func generateBarEntries(dataEntries: [DataEntry], contentSize: CGSize) {
+        self.contentSize = contentSize
         var result: [BarEntry] = []
         
+        let barSpacing = (contentSize.width - CGFloat(dataEntries.count) * barWidth) / CGFloat(barCount + 1)
+        
         for (index, entry) in dataEntries.enumerated() {
-            let entryHeight = CGFloat(entry.barHeightPer) * (contentHeight - bottomSpacing)
+            let entryHeight = CGFloat(entry.barHeightPer) * (contentSize.height - bottomSpacing)
             let xPosition: CGFloat = barSpacing + CGFloat(index) * (barWidth + barSpacing)
-            let yPosition: CGFloat = contentHeight - bottomSpacing - entryHeight
+            let yPosition: CGFloat = contentSize.height - bottomSpacing - entryHeight
             let origin = CGPoint(x: xPosition, y: yPosition)
             
             let barEntry = BarEntry(
@@ -51,7 +53,7 @@ extension BarChartViewModel {
         barEntries.send(result)
     }
     
-    func generateHorizontalLines(maxValue: Int, contentHeight: CGFloat) {
+    func generateHorizontalLines(maxValue: Int) {
         var result: [HorizontalLine] = []
         
         let peak = getPeak(by: maxValue)
@@ -64,11 +66,11 @@ extension BarChartViewModel {
         ]
         
         for (index, lineValue) in horizontalLineValues.enumerated() {
-            let yPosition = contentHeight - bottomSpacing - CGFloat(index) / CGFloat(4) * (contentHeight - bottomSpacing)
+            let yPosition = contentSize.height - bottomSpacing - CGFloat(index) / CGFloat(4) * (contentSize.height - bottomSpacing)
             let lineSegment = BarLineSegment(
                 value: lineValue,
                 startPoint: CGPoint(x: 0, y: yPosition),
-                endPoint: CGPoint(x: chartViewContentWidth, y: yPosition)
+                endPoint: CGPoint(x: contentSize.width, y: yPosition)
             )
             let line = HorizontalLine(width: 0.5, segment: lineSegment)
             

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let dataEntries: [DataEntry] = Array(
             repeating: DataEntry(value: 0, date: "", barColor: .clear, barHeightPer: 0),
-            count: 7
+            count: barChatView.barCount
         )
         
         barChatView.updateEntries(with: dataEntries)
