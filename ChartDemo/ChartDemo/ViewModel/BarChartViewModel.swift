@@ -13,9 +13,9 @@ class BarChartViewModel {
     let horizontalLines = PassthroughSubject<[HorizontalLine], Never>()
     
     private let bottomSpacing: CGFloat = 40
+    private let leadingSpacing: CGFloat = 40
     let barWidth: CGFloat
     let barCount: Int
-    var barSpacing: CGFloat = .zero
     
     var contentSize: CGSize = .zero
     
@@ -32,11 +32,11 @@ extension BarChartViewModel {
         self.contentSize = contentSize
         var result: [BarEntry] = []
         
-        let barSpacing = (contentSize.width - CGFloat(dataEntries.count) * barWidth) / CGFloat(barCount + 1)
+        let barSpacing = (contentSize.width - leadingSpacing - CGFloat(dataEntries.count) * barWidth) / CGFloat(barCount + 1)
         
         for (index, entry) in dataEntries.enumerated() {
             let entryHeight = CGFloat(entry.barHeightPer) * (contentSize.height - bottomSpacing)
-            let xPosition: CGFloat = barSpacing + CGFloat(index) * (barWidth + barSpacing)
+            let xPosition: CGFloat = leadingSpacing + barSpacing + CGFloat(index) * (barWidth + barSpacing)
             let yPosition: CGFloat = contentSize.height - bottomSpacing - entryHeight
             let origin = CGPoint(x: xPosition, y: yPosition)
             
@@ -69,7 +69,7 @@ extension BarChartViewModel {
             let yPosition = contentSize.height - bottomSpacing - CGFloat(index) / CGFloat(4) * (contentSize.height - bottomSpacing)
             let lineSegment = BarLineSegment(
                 value: lineValue,
-                startPoint: CGPoint(x: 0, y: yPosition),
+                startPoint: CGPoint(x: leadingSpacing, y: yPosition),
                 endPoint: CGPoint(x: contentSize.width, y: yPosition)
             )
             let line = HorizontalLine(width: 0.5, segment: lineSegment)

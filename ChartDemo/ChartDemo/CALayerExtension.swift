@@ -29,7 +29,7 @@ extension CALayer {
         }
     }
     
-    func addTextLayer(frame: CGRect, color: CGColor, fontSize: CGFloat, text: String, animated: Bool, oldFrame: CGRect?) {
+    func addTextLayer(frame: CGRect, color: CGColor?, fontSize: CGFloat, text: String, animated: Bool, oldFrame: CGRect?) {
         let textLayer = CATextLayer()
         textLayer.frame = frame
         textLayer.foregroundColor = color
@@ -49,10 +49,19 @@ extension CALayer {
         }
     }
     
-    func addRectangleLayer(frame: CGRect, color: CGColor, animated: Bool, oldFrame: CGRect?) {
+    func addRectangleLayer(
+        frame: CGRect,
+        color: CGColor?,
+        cornerRadius: CGFloat = 0,
+        maskedCorners: CACornerMask = [],
+        animated: Bool,
+        oldFrame: CGRect?
+    ) {
         let layer = CALayer()
         layer.frame = frame
         layer.backgroundColor = color
+        layer.cornerRadius = cornerRadius
+        layer.maskedCorners = maskedCorners
         self.addSublayer(layer)
         
         if animated, let oldFrame = oldFrame {

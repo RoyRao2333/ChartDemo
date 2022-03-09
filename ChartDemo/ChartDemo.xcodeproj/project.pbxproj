@@ -23,6 +23,7 @@
 		B049349827D73CF90031653E /* UIBezierPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349727D73CF90031653E /* UIBezierPathExtension.swift */; };
 		B049349A27D758060031653E /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349927D758060031653E /* PublisherExtension.swift */; };
 		B049349C27D759080031653E /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349B27D759080031653E /* ArrayExtension.swift */; };
+		B049349E27D8456E0031653E /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349D27D8456E0031653E /* ColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		B049349727D73CF90031653E /* UIBezierPathExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBezierPathExtension.swift; sourceTree = "<group>"; };
 		B049349927D758060031653E /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
 		B049349B27D759080031653E /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		B049349D27D8456E0031653E /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				B049349527D73C5E0031653E /* CALayerExtension.swift */,
 				B049349727D73CF90031653E /* UIBezierPathExtension.swift */,
 				B049349927D758060031653E /* PublisherExtension.swift */,
+				B049349D27D8456E0031653E /* ColorExtension.swift */,
 				B049349B27D759080031653E /* ArrayExtension.swift */,
 				B049347627D608210031653E /* Main.storyboard */,
 				B049347927D608220031653E /* Assets.xcassets */,
@@ -205,6 +208,7 @@
 				B049348B27D6FC210031653E /* BarEntry.swift in Sources */,
 				B049348827D60A430031653E /* BarChartViewModel.swift in Sources */,
 				B049349027D6FDC00031653E /* BarChartView.swift in Sources */,
+				B049349E27D8456E0031653E /* ColorExtension.swift in Sources */,
 				B049349627D73C5E0031653E /* CALayerExtension.swift in Sources */,
 				B049347127D608210031653E /* AppDelegate.swift in Sources */,
 				B049347327D608210031653E /* SceneDelegate.swift in Sources */,

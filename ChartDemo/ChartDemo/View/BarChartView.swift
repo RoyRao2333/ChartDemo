@@ -118,24 +118,33 @@ extension BarChartView {
                         animated: false,
                         oldSegment: nil
                     )
+                    
+                    weakSelf.mainLayer.addTextLayer(
+                        frame: CGRect(x: 0, y: line.segment.startPoint.y - 11, width: 30, height: 22),
+                        color: UIColor(hex: "#a5afb9")?.cgColor,
+                        fontSize: 14,
+                        text: "\(line.segment.value)",
+                        animated: false,
+                        oldFrame: nil
+                    )
                 }
             }
             .store(in: &subscribers)
     }
     
     private func addBar(index: Int, entry: BarEntry, oldEntry: BarEntry? = nil, animated: Bool = true) {
-        let barColor = entry.data.barColor.cgColor
-        
         mainLayer.addRectangleLayer(
             frame: entry.barFrame,
-            color: barColor,
+            color: UIColor(hex: "#9169e5")?.cgColor,
+            cornerRadius: 4,
+            maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner],
             animated: animated,
             oldFrame: oldEntry?.barFrame
         )
         
         mainLayer.addTextLayer(
             frame: entry.dateLabelFrame,
-            color: barColor,
+            color: UIColor(hex: "#a5afb9")?.cgColor,
             fontSize: 14,
             text: entry.data.date,
             animated: animated,
