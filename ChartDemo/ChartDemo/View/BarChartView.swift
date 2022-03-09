@@ -207,8 +207,9 @@ extension BarChartView {
         var points: [CGPoint] = []
         
         entries.forEach {
-            points.append($0.barOrigin)
-            points.append(CGPoint(x: $0.barOrigin.x + $0.barWidth, y: $0.barOrigin.y))
+//            points.append($0.barOrigin)
+//            points.append(CGPoint(x: $0.barOrigin.x + $0.barWidth, y: $0.barOrigin.y))
+            points.append(CGPoint(x: $0.barOrigin.x + $0.barWidth / 2 ,y: $0.barOrigin.y))
         }
         
         let baseLineY = firstEntry.barOrigin.y + firstEntry.barHeight

@@ -39,7 +39,7 @@
                                         <rect key="frame" x="20" y="35" width="80" height="30"/>
                                         <color key="backgroundColor" red="0.88235294117647056" green="0.39215686274509803" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="7gS-SA-599"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="7gS-SA-599"/>
                                             <constraint firstAttribute="height" constant="30" id="gpx-fc-VcE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -59,6 +59,7 @@
                                     </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Df8-Iw-drF" secondAttribute="trailing" id="Dyf-zU-l4w"/>
                                     <constraint firstItem="JtV-T5-LkN" firstAttribute="leading" secondItem="3EZ-xd-LJk" secondAttribute="leading" constant="20" id="XBZ-gw-tXI"/>
                                     <constraint firstItem="Df8-Iw-drF" firstAttribute="centerY" secondItem="3EZ-xd-LJk" secondAttribute="centerY" id="fkz-2k-97W"/>
                                     <constraint firstItem="JtV-T5-LkN" firstAttribute="centerY" secondItem="3EZ-xd-LJk" secondAttribute="centerY" id="iYp-fV-Nyq"/>

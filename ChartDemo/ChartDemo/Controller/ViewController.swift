@@ -22,6 +22,7 @@ class ViewController: UIViewController {
             .publisher(for: .tapChanged, object: nil)
             .compactMap { $0.userInfo as? [String: String] }
             .compactMap { $0["count"] }
+            .receive(on: RunLoop.main)
             .assign(to: \.text, on: countLabel)
     }
     
