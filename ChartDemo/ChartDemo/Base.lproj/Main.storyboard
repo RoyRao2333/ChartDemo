@@ -32,19 +32,57 @@
                                     <action selector="generateRandomDataEntries:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WQo-fm-p6X"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3EZ-xd-LJk">
+                                <rect key="frame" x="0.0" y="203" width="414" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Period" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JtV-T5-LkN">
+                                        <rect key="frame" x="20" y="35" width="80" height="30"/>
+                                        <color key="backgroundColor" red="0.88235294117647056" green="0.39215686274509803" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="7gS-SA-599"/>
+                                            <constraint firstAttribute="height" constant="30" id="gpx-fc-VcE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Df8-Iw-drF">
+                                        <rect key="frame" x="130" y="40" width="29" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" red="0.88235294119999996" green="0.3921568627" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="JtV-T5-LkN" firstAttribute="leading" secondItem="3EZ-xd-LJk" secondAttribute="leading" constant="20" id="XBZ-gw-tXI"/>
+                                    <constraint firstItem="Df8-Iw-drF" firstAttribute="centerY" secondItem="3EZ-xd-LJk" secondAttribute="centerY" id="fkz-2k-97W"/>
+                                    <constraint firstItem="JtV-T5-LkN" firstAttribute="centerY" secondItem="3EZ-xd-LJk" secondAttribute="centerY" id="iYp-fV-Nyq"/>
+                                    <constraint firstItem="Df8-Iw-drF" firstAttribute="leading" secondItem="JtV-T5-LkN" secondAttribute="trailing" constant="30" id="veM-AA-3CV"/>
+                                    <constraint firstAttribute="height" constant="100" id="yIp-jm-fR4"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3EZ-xd-LJk" secondAttribute="trailing" id="IkD-VK-QP9"/>
                             <constraint firstItem="09B-oV-lPo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="JWP-jJ-DfK"/>
                             <constraint firstItem="Fs4-K6-szy" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="LbN-DW-Eln"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fs4-K6-szy" secondAttribute="trailing" id="g0u-bh-qMR"/>
                             <constraint firstItem="Fs4-K6-szy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nmU-9L-18W"/>
+                            <constraint firstItem="Fs4-K6-szy" firstAttribute="top" secondItem="3EZ-xd-LJk" secondAttribute="bottom" id="tZm-Y8-Oki"/>
+                            <constraint firstItem="3EZ-xd-LJk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="w7S-Bq-Ggb"/>
                             <constraint firstItem="09B-oV-lPo" firstAttribute="top" secondItem="Fs4-K6-szy" secondAttribute="bottom" constant="50" id="wyh-Yq-b7G"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="barChatView" destination="Fs4-K6-szy" id="qJa-yO-NGK"/>
+                        <outlet property="countLabel" destination="Df8-Iw-drF" id="SRz-94-LpM"/>
                         <outlet property="generateBtn" destination="09B-oV-lPo" id="Php-Ab-5BG"/>
                     </connections>
                 </viewController>

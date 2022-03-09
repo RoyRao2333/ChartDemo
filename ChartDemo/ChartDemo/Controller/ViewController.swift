@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import Combine
 
 class ViewController: UIViewController {
     @IBOutlet private weak var barChatView: BarChartView!
     @IBOutlet private var generateBtn: UIButton!
+    @IBOutlet private var countLabel: UILabel!
+    
+    private var subscriber: AnyCancellable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        subscriber = NotificationCenter.default
+            .publisher(for: .tapChanged, object: nil)
+            .compactMap { $0.userInfo as? [String: String] }
+            .compactMap { $0["count"] }
+            .assign(to: \.text, on: countLabel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,5 +40,6 @@ extension ViewController {
     
     @IBAction private func generateRandomDataEntries(_ sender: UIButton) {
         barChatView.random()
+        countLabel.text = "N/A"
     }
 }

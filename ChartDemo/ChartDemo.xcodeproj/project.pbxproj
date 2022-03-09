@@ -24,6 +24,7 @@
 		B049349A27D758060031653E /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349927D758060031653E /* PublisherExtension.swift */; };
 		B049349C27D759080031653E /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349B27D759080031653E /* ArrayExtension.swift */; };
 		B049349E27D8456E0031653E /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049349D27D8456E0031653E /* ColorExtension.swift */; };
+		B04934A227D87C240031653E /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04934A127D87C240031653E /* CommonExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		B049349927D758060031653E /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
 		B049349B27D759080031653E /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		B049349D27D8456E0031653E /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		B04934A127D87C240031653E /* CommonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				B049349927D758060031653E /* PublisherExtension.swift */,
 				B049349D27D8456E0031653E /* ColorExtension.swift */,
 				B049349B27D759080031653E /* ArrayExtension.swift */,
+				B04934A127D87C240031653E /* CommonExtensions.swift */,
 				B049347627D608210031653E /* Main.storyboard */,
 				B049347927D608220031653E /* Assets.xcassets */,
 				B049347B27D608220031653E /* LaunchScreen.storyboard */,
@@ -204,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B049348D27D6FCE10031653E /* DataEntry.swift in Sources */,
+				B04934A227D87C240031653E /* CommonExtensions.swift in Sources */,
 				B049347527D608210031653E /* ViewController.swift in Sources */,
 				B049348B27D6FC210031653E /* BarEntry.swift in Sources */,
 				B049348827D60A430031653E /* BarChartViewModel.swift in Sources */,

@@ -36,13 +36,17 @@ class BarChartView: UIView {
         guard
             let point = touches.first?.location(in: self),
             let tappedLayer = mainLayer.hitTest(point),
+            let tappedLayerName = tappedLayer.name,
             let sublayers = mainLayer.sublayers
         else { return }
         
         if tappedLayer == mainLayer { return }
         
         sublayers.forEach {
-            if $0.name == "ChartBar" {
+            if
+                let layerName = $0.name,
+                layerName.starts(with: "CB")
+            {
                 if $0 == tappedLayer {
                     $0.backgroundColor = UIColor.systemBlue.cgColor
                 } else {
@@ -50,6 +54,9 @@ class BarChartView: UIView {
                 }
             }
         }
+        
+        let count = tappedLayerName.replacingOccurrences(of: "CB", with: "")
+        NotificationCenter.default.post(name: .tapChanged, object: nil, userInfo: ["count": count])
     }
 }
 
@@ -166,7 +173,7 @@ extension BarChartView {
     private func addBar(index: Int, entry: BarEntry, oldEntry: BarEntry? = nil, animated: Bool = true) {
         mainLayer.addRectangleLayer(
             frame: entry.barFrame,
-            name: "ChartBar",
+            name: "CB\(entry.data.value)",
             color: UIColor(hex: "#9169e5")?.cgColor,
             cornerRadius: 4,
             maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner],
