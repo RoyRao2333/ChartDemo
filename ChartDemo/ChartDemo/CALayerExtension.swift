@@ -84,6 +84,7 @@ extension CALayer {
     
     func addRectangleLayer(
         frame: CGRect,
+        name: String?,
         color: CGColor?,
         cornerRadius: CGFloat = 0,
         maskedCorners: CACornerMask = [],
@@ -95,6 +96,7 @@ extension CALayer {
         layer.backgroundColor = color
         layer.cornerRadius = cornerRadius
         layer.maskedCorners = maskedCorners
+        layer.name = name
         self.addSublayer(layer)
         
         if animated, let oldFrame = oldFrame {
