@@ -92,7 +92,7 @@ extension BarChartView {
                     height: weakSelf.frame.size.height
                 )
                 
-                let values = output.current.map({ $0.data.value })
+                let values = output.current.map { $0.data.value }
                 if !values.isEmpty {
                     let max = values.max() ?? values.first!
                     weakSelf.showHorizontalLines(maxValue: max)
@@ -102,6 +102,17 @@ extension BarChartView {
                     let oldValue = output.previous?.safeValue(at: index)
                     weakSelf.addBar(index: index, entry: entry, oldEntry: oldValue)
                 }
+                
+                
+                let newPoints = weakSelf.getControlPoints(for: output.current)
+                let oldPoints = weakSelf.getControlPoints(for: output.previous ?? [])
+                
+                weakSelf.mainLayer.addCurvedLineLayer(
+                    points: newPoints,
+                    color: UIColor(hex: "#e164b4")?.cgColor,
+                    lineWidth: 3,
+                    oldPoints: oldPoints
+                )
             }
             .store(in: &subscribers)
         
@@ -113,7 +124,7 @@ extension BarChartView {
                     weakSelf.mainLayer.addLineLayer(
                         lineSegment: line.segment,
                         color: UIColor.separator.cgColor,
-                        width: line.width,
+                        lineWidth: line.width,
                         isDashed: false,
                         animated: false,
                         oldSegment: nil
@@ -160,5 +171,22 @@ extension BarChartView {
         }
         
         viewModel.generateHorizontalLines(maxValue: maxValue)
+    }
+    
+    private func getControlPoints(for entries: [BarEntry]) -> [CGPoint] {
+        guard let firstEntry = entries.first else { return [] }
+        
+        var points: [CGPoint] = []
+        
+        entries.forEach {
+            points.append($0.barOrigin)
+            points.append(CGPoint(x: $0.barOrigin.x + $0.barWidth, y: $0.barOrigin.y))
+        }
+        
+        let baseLineY = firstEntry.barOrigin.y + firstEntry.barHeight
+        points.insert(CGPoint(x: 40, y: baseLineY), at: 0)
+        points.append(CGPoint(x: frame.maxX, y: baseLineY))
+        
+        return points
     }
 }

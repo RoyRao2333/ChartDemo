@@ -10,12 +10,19 @@ import UIKit
 
 extension CALayer {
     
-    func addLineLayer(lineSegment: BarLineSegment, color: CGColor, width: CGFloat, isDashed: Bool, animated: Bool, oldSegment: BarLineSegment?) {
+    func addLineLayer(
+        lineSegment: BarLineSegment,
+        color: CGColor?,
+        lineWidth: CGFloat,
+        isDashed: Bool,
+        animated: Bool = true,
+        oldSegment: BarLineSegment?
+    ) {
         let layer = CAShapeLayer()
         layer.path = UIBezierPath(lineSegment: lineSegment).cgPath
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = color
-        layer.lineWidth = width
+        layer.lineWidth = lineWidth
         if isDashed {
             layer.lineDashPattern = [4, 4]
         }
@@ -29,7 +36,33 @@ extension CALayer {
         }
     }
     
-    func addTextLayer(frame: CGRect, color: CGColor?, fontSize: CGFloat, text: String, animated: Bool, oldFrame: CGRect?) {
+    func addCurvedLineLayer(
+        points: [CGPoint],
+        color: CGColor?,
+        lineWidth: CGFloat,
+        isDashed: Bool = false,
+        animated: Bool = true,
+        oldPoints: [CGPoint]
+    ) {
+        let layer = CAShapeLayer()
+        layer.path = UIBezierPath(from: points).cgPath
+        layer.fillColor = UIColor.clear.cgColor
+        layer.strokeColor = color
+        layer.lineWidth = lineWidth
+        if isDashed {
+            layer.lineDashPattern = [4, 4]
+        }
+        self.addSublayer(layer)
+        
+        if animated, !oldPoints.isEmpty {
+            layer.animate(
+                fromValue: UIBezierPath(from: oldPoints).cgPath,
+                toValue: layer.path!,
+                keyPath: "path")
+        }
+    }
+    
+    func addTextLayer(frame: CGRect, color: CGColor?, fontSize: CGFloat, text: String, animated: Bool = true, oldFrame: CGRect?) {
         let textLayer = CATextLayer()
         textLayer.frame = frame
         textLayer.foregroundColor = color

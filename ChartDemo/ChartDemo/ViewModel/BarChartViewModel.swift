@@ -87,10 +87,11 @@ extension BarChartViewModel {
     private func getPeak(by value: Int) -> Int {
         if value <= 20 {
             return 20
-        } else if value % 5 == 0 || value % 4 == 0 {
+        } else if value % 5 == 0 && value % 4 == 0 {
             return value
         }
         
-        return (value / 20 + 1) * 20
+        let result = (value / 20 + 1) * 20
+        return result
     }
 }
