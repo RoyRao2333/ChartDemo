@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B03D05F227D9B29100B26D08 /* BarChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03D05F127D9B29000B26D08 /* BarChartTableViewCell.swift */; };
 		B049347127D608210031653E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049347027D608210031653E /* AppDelegate.swift */; };
 		B049347327D608210031653E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049347227D608210031653E /* SceneDelegate.swift */; };
 		B049347527D608210031653E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049347427D608210031653E /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B03D05F127D9B29000B26D08 /* BarChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartTableViewCell.swift; sourceTree = "<group>"; };
 		B049346D27D608210031653E /* ChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B049347027D608210031653E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B049347227D608210031653E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				B049348F27D6FDC00031653E /* BarChartView.swift */,
+				B03D05F127D9B29000B26D08 /* BarChartTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03D05F227D9B29100B26D08 /* BarChartTableViewCell.swift in Sources */,
 				B049348D27D6FCE10031653E /* DataEntry.swift in Sources */,
 				B04934A227D87C240031653E /* CommonExtensions.swift in Sources */,
 				B049347527D608210031653E /* ViewController.swift in Sources */,

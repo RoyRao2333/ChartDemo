@@ -6,7 +6,7 @@
 
 import UIKit
 
-struct DataEntry {
+struct DataEntry: Hashable {
     let value: Int
     let date: String
     let barColor: UIColor

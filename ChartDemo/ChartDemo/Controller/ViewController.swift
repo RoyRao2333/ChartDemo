@@ -6,41 +6,86 @@
 //
 
 import UIKit
-import Combine
 
 class ViewController: UIViewController {
-    @IBOutlet private weak var barChatView: BarChartView!
+    @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private var generateBtn: UIButton!
-    @IBOutlet private var countLabel: UILabel!
     
-    private var subscriber: AnyCancellable?
+    private lazy var dataSource = makeDataSource()
+    private var models: [BarEntry] = []
+    
+    typealias DataSource = UITableViewDiffableDataSource<Section, BarEntry>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, BarEntry>
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        subscriber = NotificationCenter.default
-            .publisher(for: .tapChanged, object: nil)
-            .compactMap { $0.userInfo as? [String: String] }
-            .compactMap { $0["count"] }
-            .receive(on: RunLoop.main)
-            .assign(to: \.text, on: countLabel)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        let dataEntries: [DataEntry] = Array(
-            repeating: DataEntry(value: 0, date: "", barColor: .clear, barHeightPer: 0),
-            count: barChatView.barCount
-        )
-        
-        barChatView.updateEntries(with: dataEntries)
+        tableView.delegate = self
     }
 }
 
 
 extension ViewController {
     
-    @IBAction private func generateRandomDataEntries(_ sender: UIButton) {
-        barChatView.random()
-        countLabel.text = "N/A"
+    private func makeDataSource() -> DataSource {
+        DataSource(tableView: tableView) { tableView, indexPath, item in
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "BarChartCell",
+                for: indexPath
+            ) as? BarChartTableViewCell
+            
+            return cell
+        }
+    }
+    
+    private func applySnapshot(animates: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(models, toSection: .main)
+        
+        dataSource.apply(snapshot, animatingDifferences: animates)
+    }
+    
+    func random() {
+        var result: [DataEntry] = []
+        var randoms: [Int] = []
+        
+        (0 ..< 7).forEach { _ in
+            let value = arc4random_uniform(90) + 10
+            randoms.append(Int(value))
+        }
+        
+        let max = randoms.max() ?? randoms.first!
+        
+        randoms.forEach { value in
+            let heightPer = CGFloat(value) / CGFloat(max)
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM.dd"
+            let date = formatter.string(from: Date())
+            
+            let entry = DataEntry(
+                value: Int(value),
+                date: date,
+                barColor: UIColor.systemPurple,
+                barHeightPer: heightPer
+            )
+            result.append(entry)
+        }
+        
+        
+    }
+}
+
+
+extension ViewController: UITableViewDelegate {
+    
+}
+
+
+extension ViewController {
+    
+    enum Section: Hashable {
+        case main
     }
 }

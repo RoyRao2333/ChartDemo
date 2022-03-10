@@ -6,7 +6,7 @@
 
 import UIKit
 
-struct BarEntry {
+struct BarEntry: Hashable {
     var barOrigin: CGPoint
     var barWidth: CGFloat
     var barHeight: CGFloat

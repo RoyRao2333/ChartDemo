@@ -66,36 +66,6 @@ extension BarChartView {
     func updateEntries(with dataEntries: [DataEntry]) {
         viewModel.generateBarEntries(dataEntries: dataEntries, contentSize: frame.size)
     }
-    
-    func random() {
-        var result: [DataEntry] = []
-        var randoms: [Int] = []
-        
-        (0 ..< 7).forEach { _ in
-            let value = arc4random_uniform(90) + 10
-            randoms.append(Int(value))
-        }
-        
-        let max = randoms.max() ?? randoms.first!
-        
-        randoms.forEach { value in
-            let heightPer = CGFloat(value) / CGFloat(max)
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM.dd"
-            let date = formatter.string(from: Date())
-            
-            let entry = DataEntry(
-                value: Int(value),
-                date: date,
-                barColor: UIColor.systemPurple,
-                barHeightPer: heightPer
-            )
-            result.append(entry)
-        }
-        
-        updateEntries(with: result)
-    }
 }
 
 
