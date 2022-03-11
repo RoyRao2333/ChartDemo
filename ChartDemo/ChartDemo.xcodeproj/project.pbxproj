@@ -67,6 +67,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		248F7CF627DB662600B8C27C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B049349527D73C5E0031653E /* CALayerExtension.swift */,
+				B049349727D73CF90031653E /* UIBezierPathExtension.swift */,
+				B049349927D758060031653E /* PublisherExtension.swift */,
+				B049349D27D8456E0031653E /* ColorExtension.swift */,
+				B049349B27D759080031653E /* ArrayExtension.swift */,
+				B04934A127D87C240031653E /* CommonExtensions.swift */,
+				B069932C27DAF5F2000873B6 /* HashableSynthesizable.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B049346427D608210031653E = {
 			isa = PBXGroup;
 			children = (
@@ -90,15 +104,9 @@
 				B049348E27D6FDA70031653E /* View */,
 				B049348627D60A260031653E /* ViewModel */,
 				B049348927D6F0AC0031653E /* Model */,
+				248F7CF627DB662600B8C27C /* Extensions */,
 				B049347027D608210031653E /* AppDelegate.swift */,
 				B049347227D608210031653E /* SceneDelegate.swift */,
-				B049349527D73C5E0031653E /* CALayerExtension.swift */,
-				B049349727D73CF90031653E /* UIBezierPathExtension.swift */,
-				B049349927D758060031653E /* PublisherExtension.swift */,
-				B049349D27D8456E0031653E /* ColorExtension.swift */,
-				B049349B27D759080031653E /* ArrayExtension.swift */,
-				B04934A127D87C240031653E /* CommonExtensions.swift */,
-				B069932C27DAF5F2000873B6 /* HashableSynthesizable.swift */,
 				B049347627D608210031653E /* Main.storyboard */,
 				B049347927D608220031653E /* Assets.xcassets */,
 				B049347B27D608220031653E /* LaunchScreen.storyboard */,

@@ -9,46 +9,54 @@ import UIKit
 import Combine
 
 class BarChartTableViewCell: UITableViewCell {
-    @IBOutlet private weak var barChatView: BarChartView!
+    @IBOutlet private weak var barChartView: BarChartView!
     @IBOutlet private var countLabel: UILabel!
     
     private var subscriber: AnyCancellable?
+    private let leadingSpacing: CGFloat = 40
+    private let bottomSpacing: CGFloat = 40
+    private let barWidth: CGFloat = 10
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setup()
+        setObservation()
+    }
+}
+
+
+// MARK: Shared Methods -
+extension BarChartTableViewCell {
+    
+    func updateInfo(with dataEntries: [DataEntry]) {
+        guard !dataEntries.isEmpty else { return }
+        let values = dataEntries.map { $0.value }
+        guard let maxValue = values.max() ?? values.sorted(by: >).first else { return }
         
+        let barEntries = generateBarEntries(dataEntries: dataEntries, contentSize: barChartView.frame.size)
+        let lines = generateHorizontalLines(maxValue: maxValue, contentSize: barChartView.frame.size)
+        let model = BarChartModel(barEntries: barEntries, horizontalLines: lines, maxValue: maxValue)
+        barChartView.updateView(with: model)
+    }
+}
+
+
+// MARK: Private Methods -
+extension BarChartTableViewCell {
+    
+    private func setObservation() {
         subscriber = NotificationCenter.default
-            .publisher(for: .tapChanged, object: nil)
+            .publisher(for: .tapChanged, object: barChartView)
             .compactMap { $0.userInfo as? [String: String] }
             .compactMap { $0["count"] }
             .receive(on: RunLoop.main)
             .assign(to: \.text, on: countLabel)
     }
-}
-
-
-extension BarChartTableViewCell {
     
-    func updateInfo(with barEntries: [BarEntry]) {
-        
-    }
-    
-    private func setup() {
-        let dataEntries: [DataEntry] = Array(
-            repeating: DataEntry(value: 0, date: "", barColor: .clear, barHeightPer: 0),
-            count: barChatView.barCount
-        )
-        
-        barChatView.updateEntries(with: dataEntries)
-    }
-    
-    private func generateBarEntries(dataEntries: [DataEntry], contentSize: CGSize) {
-        self.contentSize = contentSize
+    private func generateBarEntries(dataEntries: [DataEntry], contentSize: CGSize) -> [BarEntry] {
         var result: [BarEntry] = []
         
-        let barSpacing = (contentSize.width - leadingSpacing - CGFloat(dataEntries.count) * barWidth) / CGFloat(barCount + 1)
+        let barSpacing = (contentSize.width - leadingSpacing - CGFloat(dataEntries.count) * barWidth) / CGFloat(dataEntries.count + 1)
         
         for (index, entry) in dataEntries.enumerated() {
             let entryHeight = CGFloat(entry.barHeightPer) * (contentSize.height - bottomSpacing)
@@ -65,9 +73,11 @@ extension BarChartTableViewCell {
             )
             result.append(barEntry)
         }
+        
+        return result
     }
     
-    private func generateHorizontalLines(maxValue: Int) {
+    private func generateHorizontalLines(maxValue: Int, contentSize: CGSize) -> [HorizontalLine] {
         var result: [HorizontalLine] = []
         
         let peak = getPeak(by: maxValue)
@@ -91,7 +101,7 @@ extension BarChartTableViewCell {
             result.append(line)
         }
         
-        
+        return result
     }
     
     private func getPeak(by value: Int) -> Int {

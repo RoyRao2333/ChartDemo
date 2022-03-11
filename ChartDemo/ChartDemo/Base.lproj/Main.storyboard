@@ -92,7 +92,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="barChatView" destination="I8S-fm-XsU" id="Tep-UU-F8S"/>
+                                            <outlet property="barChartView" destination="I8S-fm-XsU" id="zbK-O1-5vg"/>
                                             <outlet property="countLabel" destination="d2I-NN-lvH" id="cqr-Eg-kOY"/>
                                         </connections>
                                     </tableViewCell>

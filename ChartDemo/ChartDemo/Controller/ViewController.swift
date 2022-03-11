@@ -6,21 +6,24 @@
 //
 
 import UIKit
+import Combine
 
 class ViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var tableViewModel = ChartTableViewModel(tableView: tableView)
+    private lazy var viewModel = ChartTableViewModel(tableView: tableView)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        tableView.delegate = tableViewModel
+        setup()
     }
 }
 
 
 extension ViewController {
     
-    
+    private func setup() {
+        tableView.delegate = viewModel
+    }
 }

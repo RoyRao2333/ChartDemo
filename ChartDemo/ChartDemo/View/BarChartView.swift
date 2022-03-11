@@ -11,20 +11,16 @@ import Combine
 class BarChartView: UIView {
     private let mainLayer = CALayer()
     
-    private var subscribers: Set<AnyCancellable> = []
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setup()
-        setObservation()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
         setup()
-        setObservation()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -51,15 +47,37 @@ class BarChartView: UIView {
         }
         
         let count = tappedLayerName.replacingOccurrences(of: "CB", with: "")
-        NotificationCenter.default.post(name: .tapChanged, object: nil, userInfo: ["count": count])
+        NotificationCenter.default.post(name: .tapChanged, object: self, userInfo: ["count": count])
     }
 }
 
 
 extension BarChartView {
     
-    func updateEntries(with dataEntries: [DataEntry]) {
-        viewModel.generateBarEntries(dataEntries: dataEntries, contentSize: frame.size)
+    func updateView(with model: BarChartModel) {
+        mainLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        mainLayer.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: frame.size.width,
+            height: frame.size.height
+        )
+        
+        showHorizontalLines(lines: model.horizontalLines)
+        
+        for (index, entry) in model.barEntries.enumerated() {
+            addBar(index: index, entry: entry, oldEntry: nil)
+        }
+        
+        
+        let newPoints = getControlPoints(for: model.barEntries)
+        
+        mainLayer.addCurvedLineLayer(
+            points: newPoints,
+            color: UIColor(hex: "#e164b4")?.cgColor,
+            lineWidth: 3,
+            oldPoints: []
+        )
     }
 }
 
@@ -70,8 +88,32 @@ extension BarChartView {
         layer.addSublayer(mainLayer)
     }
     
-    private func setObservation() {
+    private func showHorizontalLines(lines: [HorizontalLine]) {
+        layer.sublayers?.forEach {
+            if $0 is CAShapeLayer {
+                $0.removeFromSuperlayer()
+            }
+        }
         
+        lines.forEach { line in
+            mainLayer.addLineLayer(
+                lineSegment: line.segment,
+                color: UIColor.separator.cgColor,
+                lineWidth: line.width,
+                isDashed: false,
+                animated: false,
+                oldSegment: nil
+            )
+            
+            mainLayer.addTextLayer(
+                frame: CGRect(x: 0, y: line.segment.startPoint.y - 11, width: 30, height: 22),
+                color: UIColor(hex: "#a5afb9")?.cgColor,
+                fontSize: 14,
+                text: "\(line.segment.value)",
+                animated: false,
+                oldFrame: nil
+            )
+        }
     }
     
     private func addBar(index: Int, entry: BarEntry, oldEntry: BarEntry? = nil, animated: Bool = true) {
@@ -93,16 +135,6 @@ extension BarChartView {
             animated: animated,
             oldFrame: oldEntry?.dateLabelFrame
         )
-    }
-    
-    private func showHorizontalLines(maxValue: Int) {
-        layer.sublayers?.forEach {
-            if $0 is CAShapeLayer {
-                $0.removeFromSuperlayer()
-            }
-        }
-        
-        viewModel.generateHorizontalLines(maxValue: maxValue)
     }
     
     private func getControlPoints(for entries: [BarEntry]) -> [CGPoint] {
