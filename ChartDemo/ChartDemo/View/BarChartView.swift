@@ -12,11 +12,6 @@ class BarChartView: UIView {
     private let mainLayer = CALayer()
     
     private var subscribers: Set<AnyCancellable> = []
-    private let viewModel = BarChartViewModel(barWidth: 20)
-    
-    var barCount: Int {
-        viewModel.barCount
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,68 +71,7 @@ extension BarChartView {
     }
     
     private func setObservation() {
-        viewModel.barEntries
-            .withPrevious()
-            .sink { [weak self] output in
-                guard let weakSelf = self else { return }
-                
-                weakSelf.mainLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
-                weakSelf.mainLayer.frame = CGRect(
-                    x: 0,
-                    y: 0,
-                    width: weakSelf.frame.size.width,
-                    height: weakSelf.frame.size.height
-                )
-                
-                let values = output.current.map { $0.data.value }
-                if !values.isEmpty {
-                    let max = values.max() ?? values.first!
-                    weakSelf.showHorizontalLines(maxValue: max)
-                }
-                
-                for (index, entry) in output.current.enumerated() {
-                    let oldValue = output.previous?.safeValue(at: index)
-                    weakSelf.addBar(index: index, entry: entry, oldEntry: oldValue)
-                }
-                
-                
-                let newPoints = weakSelf.getControlPoints(for: output.current)
-                let oldPoints = weakSelf.getControlPoints(for: output.previous ?? [])
-                
-                weakSelf.mainLayer.addCurvedLineLayer(
-                    points: newPoints,
-                    color: UIColor(hex: "#e164b4")?.cgColor,
-                    lineWidth: 3,
-                    oldPoints: oldPoints
-                )
-            }
-            .store(in: &subscribers)
         
-        viewModel.horizontalLines
-            .sink { [weak self] lines in
-                guard let weakSelf = self else { return }
-                
-                lines.forEach { line in
-                    weakSelf.mainLayer.addLineLayer(
-                        lineSegment: line.segment,
-                        color: UIColor.separator.cgColor,
-                        lineWidth: line.width,
-                        isDashed: false,
-                        animated: false,
-                        oldSegment: nil
-                    )
-                    
-                    weakSelf.mainLayer.addTextLayer(
-                        frame: CGRect(x: 0, y: line.segment.startPoint.y - 11, width: 30, height: 22),
-                        color: UIColor(hex: "#a5afb9")?.cgColor,
-                        fontSize: 14,
-                        text: "\(line.segment.value)",
-                        animated: false,
-                        oldFrame: nil
-                    )
-                }
-            }
-            .store(in: &subscribers)
     }
     
     private func addBar(index: Int, entry: BarEntry, oldEntry: BarEntry? = nil, animated: Bool = true) {

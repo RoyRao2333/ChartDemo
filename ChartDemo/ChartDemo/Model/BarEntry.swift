@@ -6,7 +6,7 @@
 
 import UIKit
 
-struct BarEntry: Hashable {
+struct BarEntry: HashableSynthesizable {
     var barOrigin: CGPoint
     var barWidth: CGFloat
     var barHeight: CGFloat
