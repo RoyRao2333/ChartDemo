@@ -25,5 +25,12 @@ extension ViewController {
     
     private func setup() {
         tableView.delegate = viewModel
+        
+        viewModel.refreshData(with: [
+            viewModel.random(),
+            viewModel.random(),
+            viewModel.random(),
+            viewModel.random(),
+        ])
     }
 }

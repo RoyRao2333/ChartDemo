@@ -84,8 +84,8 @@ extension ChartTableViewModel: UITableViewDelegate {
 
 extension ChartTableViewModel {
     
-    func random() {
-        var result: [DataEntry] = []
+    func random() -> ChartData {
+        var result: ChartData = []
         var randoms: [Int] = []
         
         (0 ..< 7).forEach { _ in
@@ -111,7 +111,7 @@ extension ChartTableViewModel {
             result.append(entry)
         }
         
-        
+        return result
     }
 }
 
