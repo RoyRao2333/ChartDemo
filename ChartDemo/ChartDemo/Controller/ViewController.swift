@@ -26,11 +26,15 @@ extension ViewController {
     private func setup() {
         tableView.delegate = viewModel
         
-        viewModel.refreshData(with: [
-            viewModel.random(),
-            viewModel.random(),
-            viewModel.random(),
-            viewModel.random(),
-        ])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let weakSelf = self else { return }
+            
+            weakSelf.viewModel.refreshData(with: [
+                weakSelf.viewModel.random(),
+                weakSelf.viewModel.random(),
+                weakSelf.viewModel.random(),
+                weakSelf.viewModel.random(),
+            ])
+        }
     }
 }
