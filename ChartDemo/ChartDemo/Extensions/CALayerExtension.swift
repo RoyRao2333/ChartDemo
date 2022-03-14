@@ -40,25 +40,38 @@ extension CALayer {
         points: [CGPoint],
         color: CGColor?,
         lineWidth: CGFloat,
-        isDashed: Bool = false,
         animated: Bool = true,
         oldPoints: [CGPoint]
     ) {
-        let layer = CAShapeLayer()
-        layer.path = UIBezierPath(from: points).cgPath
-        layer.fillColor = UIColor.clear.cgColor
-        layer.strokeColor = color
-        layer.lineWidth = lineWidth
-        if isDashed {
-            layer.lineDashPattern = [4, 4]
-        }
-        self.addSublayer(layer)
-        
-        if animated, !oldPoints.isEmpty {
-            layer.animate(
-                fromValue: UIBezierPath(from: oldPoints).cgPath,
-                toValue: layer.path!,
-                keyPath: "path")
+        if let firstPoint = points.first {
+            let curveLayer = CAShapeLayer()
+            let curvePath = UIBezierPath()
+            curvePath.move(to: firstPoint)
+            for index in points.indices {
+                if index + 1 < points.count {
+                    let startPoint = points[index]
+                    let endPoint = points[index + 1]
+                    let midX = (endPoint.x - startPoint.x) / 2
+                    curvePath.addCurve(to: endPoint, controlPoint1: CGPoint(x: startPoint.x + midX, y: startPoint.y), controlPoint2: CGPoint(x: startPoint.x + midX, y: endPoint.y))
+                }
+            }
+            curveLayer.path = curvePath.cgPath
+            curveLayer.lineWidth = lineWidth
+            curveLayer.strokeColor = color
+            curveLayer.fillColor = UIColor.clear.cgColor
+            curveLayer.shadowRadius = 5
+            curveLayer.shadowOpacity = 0.8
+            curveLayer.shadowOffset = CGSize(width: 0, height: 4)
+            curveLayer.shadowColor = color
+            curveLayer.strokeEnd = 1
+            self.addSublayer(curveLayer)
+            
+            if animated, !oldPoints.isEmpty {
+                curveLayer.animate(
+                    fromValue: UIBezierPath(from: oldPoints).cgPath,
+                    toValue: curveLayer.path!,
+                    keyPath: "path")
+            }
         }
     }
     
@@ -132,12 +145,8 @@ extension CALayer {
         }
         
         if borderWidth > 0 {
-            let borderLayer = CAShapeLayer()
-            borderLayer.path = UIBezierPath(ovalIn: frame).cgPath
-            borderLayer.lineWidth = borderWidth
-            borderLayer.strokeColor = borderColor
-            borderLayer.fillColor = UIColor.clear.cgColor
-            layer.addSublayer(borderLayer)
+            layer.lineWidth = borderWidth
+            layer.strokeColor = borderColor
         }
     }
     
