@@ -79,6 +79,7 @@ extension ChartTableViewModel {
 // MARK: TableView Delegate
 extension ChartTableViewModel: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool { false }
 }
 
 

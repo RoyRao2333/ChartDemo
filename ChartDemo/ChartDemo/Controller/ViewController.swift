@@ -25,6 +25,7 @@ extension ViewController {
     
     private func setup() {
         tableView.delegate = viewModel
+        tableView.allowsSelection = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let weakSelf = self else { return }

@@ -52,9 +52,28 @@ class BarChartView: UIView {
                 layerName.starts(with: "CB")
             {
                 if $0 == tappedLayer {
-                    $0.backgroundColor = UIColor.systemBlue.cgColor
+                    $0.backgroundColor = UIColor(hex: "#755EFF")?.cgColor
+                    
+                    sublayers.filter({ $0.name == "dotLayer" }).forEach { $0.removeFromSuperlayer() }
+                    
+                    mainLayer.addCircleLayer(
+                        frame: CGRect(
+                            x: $0.frame.origin.x + $0.frame.width / 8,
+                            y: $0.frame.origin.y - $0.frame.width / 2,
+                            width: $0.frame.width / 4 * 3,
+                            height: $0.frame.width / 4 * 3
+                        ),
+                        name: "dotLayer",
+                        fillColor: UIColor(hex: "#755EFF")?.cgColor,
+                        borderColor: UIColor.white.cgColor,
+                        borderWidth: 1,
+                        shadowOpacity: 1,
+                        shadowRadius: 6,
+                        shadowOffset: CGSize(width: 0, height: 3),
+                        shadowColor: UIColor(hex: "#755EFF")?.cgColor
+                    )
                 } else {
-                    $0.backgroundColor = UIColor(hex: "#9169e5")?.cgColor
+                    $0.backgroundColor = UIColor(hex: "#E9D6FB")?.cgColor
                 }
             }
         }
@@ -99,7 +118,7 @@ extension BarChartView {
         
         mainLayer.addCurvedLineLayer(
             points: newPoints,
-            color: UIColor(hex: "#e164b4")?.cgColor,
+            color: UIColor(hex: "#755EFF")?.cgColor,
             lineWidth: 3,
             oldPoints: []
         )
@@ -188,7 +207,7 @@ extension BarChartView {
             
             mainLayer.addTextLayer(
                 frame: CGRect(x: 0, y: line.segment.startPoint.y - 11, width: 30, height: 22),
-                color: UIColor(hex: "#a5afb9")?.cgColor,
+                color: UIColor(hex: "#A7B0BE")?.cgColor,
                 fontSize: 14,
                 text: "\(line.segment.value)",
                 animated: false,
@@ -201,7 +220,7 @@ extension BarChartView {
         mainLayer.addRectangleLayer(
             frame: entry.barFrame,
             name: "CB\(entry.data.value)",
-            color: UIColor(hex: "#9169e5")?.cgColor,
+            color: UIColor(hex: "#E9D6FB")?.cgColor,
             cornerRadius: 4,
             maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner],
             animated: animated,
@@ -210,7 +229,7 @@ extension BarChartView {
         
         mainLayer.addTextLayer(
             frame: entry.dateLabelFrame,
-            color: UIColor(hex: "#a5afb9")?.cgColor,
+            color: UIColor(hex: "#A7B0BE")?.cgColor,
             fontSize: 14,
             text: entry.data.date,
             animated: animated,

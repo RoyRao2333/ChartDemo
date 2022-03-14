@@ -105,6 +105,42 @@ extension CALayer {
         }
     }
     
+    func addCircleLayer(
+        frame: CGRect,
+        name: String?,
+        fillColor: CGColor?,
+        borderColor: CGColor?,
+        borderWidth: CGFloat,
+        shadowOpacity: Float,
+        shadowRadius: CGFloat,
+        shadowOffset: CGSize,
+        shadowColor: CGColor?
+    ) {
+        let layer = CAShapeLayer()
+        layer.path = UIBezierPath(ovalIn: frame).cgPath
+        layer.fillColor = fillColor
+        layer.borderColor = UIColor.red.cgColor
+        layer.borderWidth = borderWidth
+        layer.name = name
+        self.addSublayer(layer)
+        
+        if shadowOpacity > 0 {
+            layer.shadowRadius = shadowRadius
+            layer.shadowOpacity = shadowOpacity
+            layer.shadowOffset = shadowOffset
+            layer.shadowColor = shadowColor
+        }
+        
+        if borderWidth > 0 {
+            let borderLayer = CAShapeLayer()
+            borderLayer.path = UIBezierPath(ovalIn: frame).cgPath
+            borderLayer.lineWidth = borderWidth
+            borderLayer.strokeColor = borderColor
+            borderLayer.fillColor = UIColor.clear.cgColor
+            layer.addSublayer(borderLayer)
+        }
+    }
+    
     func animate(fromValue: Any, toValue: Any, keyPath: String) {
         let anim = CABasicAnimation(keyPath: keyPath)
         anim.fromValue = fromValue
