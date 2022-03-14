@@ -32,10 +32,10 @@
                                                     <rect key="frame" x="20" y="11" width="374" height="135"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MqO-D7-E6s">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Period" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y73-2O-p1D">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
                                                                     <color key="backgroundColor" red="0.88235294119999996" green="0.3921568627" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Fuj-9i-WRB"/>
@@ -51,7 +51,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2I-NN-lvH">
-                                                                    <rect key="frame" x="110" y="0.0" width="46.5" height="21"/>
+                                                                    <rect key="frame" x="110" y="4.5" width="46.5" height="21"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" red="0.88235294119999996" green="0.3921568627" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -69,10 +69,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="I8S-fm-XsU" customClass="BarChartView" customModule="ChartDemo" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="40.5" width="374" height="94.5"/>
+                                                            <rect key="frame" x="0.0" y="50" width="374" height="150"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="4YJ-4f-E1o"/>
+                                                                <constraint firstAttribute="height" constant="150" id="4YJ-4f-E1o"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -80,7 +80,7 @@
                                                     <constraints>
                                                         <constraint firstItem="I8S-fm-XsU" firstAttribute="leading" secondItem="VbP-Kl-m9E" secondAttribute="leading" id="GdB-iZ-2cW"/>
                                                         <constraint firstAttribute="trailing" secondItem="I8S-fm-XsU" secondAttribute="trailing" id="UPD-Vi-EK2"/>
-                                                        <constraint firstAttribute="bottom" secondItem="I8S-fm-XsU" secondAttribute="bottom" id="aRi-G6-7Mf"/>
+                                                        <constraint firstAttribute="bottom" secondItem="I8S-fm-XsU" secondAttribute="bottom" priority="750" id="aRi-G6-7Mf"/>
                                                         <constraint firstItem="MqO-D7-E6s" firstAttribute="leading" secondItem="VbP-Kl-m9E" secondAttribute="leading" id="ahm-Z6-TO9"/>
                                                         <constraint firstAttribute="trailing" secondItem="MqO-D7-E6s" secondAttribute="trailing" id="k7c-i2-cxp"/>
                                                         <constraint firstItem="I8S-fm-XsU" firstAttribute="top" secondItem="MqO-D7-E6s" secondAttribute="bottom" constant="20" id="nEi-w5-N6e"/>

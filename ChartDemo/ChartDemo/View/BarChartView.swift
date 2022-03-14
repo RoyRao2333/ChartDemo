@@ -10,6 +10,11 @@ import Combine
 
 class BarChartView: UIView {
     private let mainLayer = CALayer()
+    private let leadingSpacing: CGFloat = 40
+    private let bottomSpacing: CGFloat = 40
+    private let barWidth: CGFloat = 15
+    
+    var dataEntries: [DataEntry] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +26,14 @@ class BarChartView: UIView {
         super.init(coder: coder)
         
         setup()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        if !dataEntries.isEmpty {
+            generateModel(with: dataEntries)
+        }
+        
+        super.draw(rect)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -52,16 +65,28 @@ class BarChartView: UIView {
 }
 
 
+// MARK: Private Methods -
 extension BarChartView {
     
-    func updateView(with model: BarChartModel) {
+    private func setup() {
+        layer.addSublayer(mainLayer)
+    }
+    
+    private func generateModel(with dataEntries: [DataEntry]) {
+        guard !dataEntries.isEmpty else { return }
+        let values = dataEntries.map { $0.value }
+        guard let maxValue = values.max() ?? values.sorted(by: >).first else { return }
+        
+        let barEntries = generateBarEntries(dataEntries: dataEntries)
+        let lines = generateHorizontalLines(maxValue: maxValue)
+        let model = BarChartModel(barEntries: barEntries, horizontalLines: lines, maxValue: maxValue)
+        
+        updateView(with: model)
+    }
+    
+    private func updateView(with model: BarChartModel) {
         mainLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
-        mainLayer.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: frame.size.width,
-            height: frame.size.height
-        )
+        mainLayer.frame = bounds
         
         showHorizontalLines(lines: model.horizontalLines)
         
@@ -79,13 +104,69 @@ extension BarChartView {
             oldPoints: []
         )
     }
-}
-
-
-extension BarChartView {
     
-    private func setup() {
-        layer.addSublayer(mainLayer)
+    private func generateBarEntries(dataEntries: [DataEntry]) -> [BarEntry] {
+        var result: [BarEntry] = []
+        
+        let contentRect = bounds
+        let barSpacing = (contentRect.width - leadingSpacing - CGFloat(dataEntries.count) * barWidth) / CGFloat(dataEntries.count + 1)
+        
+        for (index, entry) in dataEntries.enumerated() {
+            let entryHeight = CGFloat(entry.barHeightPer) * (contentRect.height - bottomSpacing)
+            let xPosition: CGFloat = leadingSpacing + barSpacing + CGFloat(index) * (barWidth + barSpacing)
+            let yPosition: CGFloat = contentRect.height - bottomSpacing - entryHeight
+            let origin = CGPoint(x: xPosition, y: yPosition)
+            
+            let barEntry = BarEntry(
+                barOrigin: origin,
+                barWidth: barWidth,
+                barHeight: entryHeight,
+                barSpacing: barSpacing,
+                data: entry
+            )
+            result.append(barEntry)
+        }
+        
+        return result
+    }
+    
+    private func generateHorizontalLines(maxValue: Int) -> [HorizontalLine] {
+        var result: [HorizontalLine] = []
+        
+        let contentRect = bounds
+        let peak = getPeak(by: maxValue)
+        let horizontalLineValues: [Int] = [
+            0,
+            peak / 4,
+            peak / 2,
+            peak / 4 * 3,
+            peak
+        ]
+        
+        for (index, lineValue) in horizontalLineValues.enumerated() {
+            let yPosition = contentRect.height - bottomSpacing - CGFloat(index) / CGFloat(4) * (contentRect.height - bottomSpacing)
+            let lineSegment = BarLineSegment(
+                value: lineValue,
+                startPoint: CGPoint(x: leadingSpacing, y: yPosition),
+                endPoint: CGPoint(x: contentRect.maxX, y: yPosition)
+            )
+            let line = HorizontalLine(width: 0.5, segment: lineSegment)
+            
+            result.append(line)
+        }
+        
+        return result
+    }
+    
+    private func getPeak(by value: Int) -> Int {
+        if value <= 20 {
+            return 20
+        } else if value % 5 == 0 && value % 4 == 0 {
+            return value
+        }
+        
+        let result = (value / 20 + 1) * 20
+        return result
     }
     
     private func showHorizontalLines(lines: [HorizontalLine]) {
@@ -149,7 +230,7 @@ extension BarChartView {
         
         let baseLineY = firstEntry.barOrigin.y + firstEntry.barHeight
         points.insert(CGPoint(x: 40, y: baseLineY), at: 0)
-        points.append(CGPoint(x: frame.maxX, y: baseLineY))
+        points.append(CGPoint(x: bounds.maxX, y: baseLineY))
         
         return points
     }
