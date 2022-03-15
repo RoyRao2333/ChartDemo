@@ -242,63 +242,19 @@ extension BarChartView {
     }
     
     private func getControlPoints(for entries: [BarEntry]) -> [CGPoint] {
-//        guard let firstEntry = entries.first else { return [] }
-//
-//        var points: [CGPoint] = []
-//
-//        entries.forEach {
-//            points.append($0.barOrigin)
-//            points.append(CGPoint(x: $0.barOrigin.x + $0.barWidth, y: $0.barOrigin.y))
-//        }
-//
-//        let baseLineY = firstEntry.barOrigin.y + firstEntry.barHeight
-//        points.insert(CGPoint(x: 40, y: baseLineY), at: 0)
-//        points.append(CGPoint(x: bounds.maxX, y: baseLineY))
-//
-//        return points
-        
-        guard !entries.isEmpty else { return [] }
-        
+        guard let firstEntry = entries.first else { return [] }
+
         var points: [CGPoint] = []
-        var values = entries.map { $0.data.value }
-        if Locale.current.languageCode == "ar" {
-            values = values.reversed()
+
+        entries.forEach {
+            points.append($0.barOrigin)
+            points.append(CGPoint(x: $0.barOrigin.x + $0.barWidth, y: $0.barOrigin.y))
         }
-        let maxValue: CGFloat = CGFloat(values.max() ?? 0)
-        let minValue: CGFloat = CGFloat(values.min() ?? 0)
-        let widthScale = bounds.width
-        let heightScale = bounds.height
-        
-        if maxValue != 0 {
-            let scale = CGFloat(maxValue - minValue) / (heightScale * 2)
-            for index in values.indices {
-                var value = CGFloat(values[index])
-                if value != 0 {
-                    if maxValue == minValue {
-                        value = heightScale * 2
-                    } else if maxValue - minValue == 1 {
-                        if value == maxValue {
-                            value = heightScale * 2
-                        } else {
-                            value = heightScale * 4
-                        }
-                    } else {
-                        value = heightScale * 5 - ((value - minValue) / scale + heightScale)
-                    }
-                } else {
-                    value = heightScale * 5
-                }
-                
-                let point = CGPoint(x: widthScale * CGFloat(index) + widthScale / 2, y: value)
-                points.append(point)
-            }
-        } else {
-            for index in values.indices {
-                let point = CGPoint(x: widthScale * CGFloat(index) + widthScale / 2, y: heightScale * 5)
-                points.append(point)
-            }
-        }
-        
+
+        let baseLineY = firstEntry.barOrigin.y + firstEntry.barHeight
+        points.insert(CGPoint(x: 40, y: baseLineY), at: 0)
+        points.append(CGPoint(x: bounds.maxX, y: baseLineY))
+
         return points
     }
 }
